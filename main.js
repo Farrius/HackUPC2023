@@ -1,5 +1,6 @@
 //Global variables
 var responseGPT;
+var responseGPT2;
 //Merge Sort
 function mergeSort(array) {
   if (array.length <= 1) {
@@ -65,6 +66,7 @@ window.addEventListener("DOMContentLoaded", async function () {
   } catch (err) {
     console.error(err);
   }
+  
   response = await response.json();
   for (let i = 0; i < response.numberOfElements; ++i) {
     if (map[response.transactions[i].category.id] !== undefined) {
@@ -96,9 +98,32 @@ window.addEventListener("DOMContentLoaded", async function () {
   }
 
   console.log(category);
+  //SUMATORIO DE BALANCE
+  try {
+    var response3 = await fetch(
+      "https://int.strandscloud.com/fs-api/products/balances?timeInterval=MONTH&page=0&size=50&sort=FROM_DATE_DESC&expand=PRODUCT&groupBy=PRODUCT",
+      options
+    );
+  }
+  catch (err) {
+      console.error(err);
+  } 
+  response3 = await response3.json();
+  console.log(response3);
+  let dinero_total = response3.balances[0].closingBalance.amount;
+  var balance = 0.02 * dinero_total;
+  var balance2 = 0.0015 * dinero_total;
+  console.log(balance);
+  console.log(balance2);
+
+  if (balance < 25) balance = 25;
+  if (balance2 < 10) balance = 10;
+
+  if (category.length < 2) category.push(category[0]);
 
   //OPENAI
-  const prompt = `You will be given a category name between <> and n between /. Your task is to find the best possible purchase you can make related to that category with a budget of at most n dollars. Your output will be only one word, which is the complete name of the purchase. Input: <${category[5]}> /10000/`;
+  const prompt = `You will be given a category name between <> and n between /. Your task is to find the best possible purchase you can make related to that category with a budget of at most n dollars. Your output will be only one word, which is the complete name of the purchase. Input: <${category[0]}> /${balance}/`;
+  const prompt2 = `You will be given a category name between <> and n between /. Your task is to find the best possible purchase you can make related to that category with a budget of at most n dollars. Your output will be only one word, which is the complete name of the purchase. Input: <${category[1]}> /${balance2}/`;
   const api_key = "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"; // Reemplaza esto con tu propia clave API
   const url = "https://api.openai.com/v1/chat/completions";
   const optionsGPT = {
@@ -116,20 +141,38 @@ window.addEventListener("DOMContentLoaded", async function () {
       temperature: 0.7,
     }),
   };
-  /* Don't discomment until production
+  const optionsGPT2 = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${api_key}`,
+    },
+    body: JSON.stringify({
+      messages: [{ role: "user", content: prompt2 }],
+      model: "gpt-3.5-turbo",
+      max_tokens: 100,
+      n: 1,
+      stop: "\n",
+      temperature: 0.7,
+    }),
+  };
+  
+  //Don't discomment until production
   try {
-    var responseGPT = await fetch(url, optionsGPT);
+    responseGPT = await fetch(url, optionsGPT);
+    responseGPT2 = await fetch(url, optionsGPT2);
   } catch (err) {
     console.error(err);
-  }*/
+  }
 
-  /*
   responseGPT = await responseGPT.json();
+  responseGPT2 = await responseGPT2.json();
   console.log(responseGPT);
-  console.log(category[5]);
+  console.log(category[0]);
+  console.log(responseGPT2);
+  console.log(category[1]);
   console.log(responseGPT.choices[0].message.content);
-  */
-  responseGPT = "Bycicle";
+  console.log(responseGPT2.choices[0].message.content);
 
   //RULETA
   var tamanyoRuleta = 360;
@@ -156,6 +199,8 @@ window.addEventListener("DOMContentLoaded", async function () {
     if (i % 2) {
       opcion_i.style.borderBottomColor = "#FFFFFF";
       var afterNumero = document.querySelector("#afterNumero");
+      afterNumero.innerHTML +=
+      ".opcion-" + i + "::before {content: '" + "standard" + "'}";
     } else if (i == numeroCasillas) {
       opcion_i.style.borderBottomColor = "#FFD700";
       afterNumero.innerHTML +=
@@ -215,16 +260,23 @@ window.addEventListener("DOMContentLoaded", async function () {
     }
     var popupResultado = document.getElementById("popupResultado");
     var resultadoSlot = document.getElementById("resultadoSlot");
-    resultadoSlot.textContent = responseGPT;
-    popupResultado.style.display = "block";
+    /* resultadoSlot.textContent = responseGPT.choices[0].message.content; */
+    popupResultado.style.display = "flex";
+    if (num === numeroCasillas) {
+      popupResultado.style.backgroundColor = "#FFD700";
+      resultadoSlot.textContent = responseGPT.choices[0].message.content;
+    }
+    else if (num%2 === 0) {
+      popupResultado.style.backgroundColor =  "#33CC99";
+      resultadoSlot.textContent = responseGPT2.choices[0].message.content;
+    }
+    else {
+      popupResultado.style.backgroundColor =  "#FFFFFF";
+      resultadoSlot.textContent = "0€";
+    }
     // botón "Cerrar"
     var cerrarPopup = document.getElementById("cerrarPopup");
     cerrarPopup.addEventListener("click", function () {
-      /*
-      cerrarPopup.style.width = "50px";
-      cerrarPopup.style.height = "25px"; // Cambiar el color de fondo del botón
-      cerrarPopup.style.backgroundColor = "black"; // Cambiar el color del texto del botón
-      cerrarPopup.style.color = "white";*/
       popupResultado.style.display = "none";
     });
   });
