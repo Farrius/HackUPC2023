@@ -1,51 +1,116 @@
-window.addEventListener("DOMContentLoaded", function () {
+//javascript para la ruleta
+window.addEventListener("DOMContentLoaded", async function () {
+  //RECOGER DATOS API
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      "x-api-key": "txTEkXYw5waU0nGYj96ZgafEMDor0jA4ErqB7m74",
+      Authorization:
+        "Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6InhMQVRvOWM2T3VQci1jWEdqMEc3UiJ9.eyJpc3MiOiJodHRwczovL3N0cmFuZHMtZGVtby1iYW5rLmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHx1c2VyUEZNNCIsImF1ZCI6Imh0dHA6Ly9zYW5kYm94LnN0cmFuZHNjbG91ZC5jb20vIiwiaWF0IjoxNjgzNzk2NzkxLCJleHAiOjE2ODQyMjg3OTEsImF6cCI6Im1EblhqMHRMM1lYRU5WV21DY05DbEpQbmVXaWh6eUhsIiwiZ3R5IjoicGFzc3dvcmQifQ.mA6oJFjWPBPkcExK-qUoIyvEqJF98yHSKQ-akMYs-FSQaCUkk3AnCV-0q7ZmeBb1L_11likmc7AhhNPZqg6Yir_jMnIob3HsUYcN-YJs4oxgWQjgvxV4d3lUmjji_yq52VHdJY7MIWfBjj3sogQnBAGft1n5JWFXRJrAbqrrkmHGj0OzpL_ggp3F_x7omeyguKfKRonH9UbnCK3f-mO2bat7JyUDx8BAuOHJMY9TTRgOY-7Le8A2cvmfb6spN7wgo0i9C23onmY7RK-03138N68kUWynJqlkmDazEOj1DX8TXdxQWgPMx2MK7gGuQpej9pO-0Yq4moyHkWX17Dh44A",
+    },
+  };
+
+  var id_transaction = [];
+  var category = [];
+
+  try {
+    var response = await fetch(
+      "https://int.strandscloud.com/fs-api/transactions?recoverHeatLevel=false&page=0&size=50&sort=DATE_DESC&applyToSplits=false",
+      options
+    );
+  } catch (err) {
+    console.error(err);
+  }
+
+  response = await response.json();
+
+  for (let i = 0; i < response.numberOfElements; ++i) {
+    id_transaction.push(response.transactions[i].category.id);
+  }
+
+  for (let i = 0; i < id_transaction.length; ++i) {
+    try {
+      var response2 = await fetch(
+        "https://int.strandscloud.com/fs-api/categories/" + id_transaction[i],
+        options
+      );
+    } catch (err) {
+      console.error(err);
+    }
+    response2 = await response2.json();
+    category.push(response2.name);
+  }
+
+  console.log(category);
+
+  //PARTE OPENAI
+
+  const prompt = "cuanto es 5 + 5?";
+  const api_key = "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"; // Reemplaza esto con tu propia clave API
+  const url = "https://api.openai.com/v1/engines/davinci-codex/completions";
+
+  const optionsGPT = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${api_key}`,
+    },
+    body: JSON.stringify({
+      prompt: prompt,
+      max_tokens: 50,
+      n: 1,
+      stop: "\n",
+    }),
+  };
+
+  try {
+    var responseGPT = await fetch(url, optionsGPT);
+    console.log(responseGPT);
+  } catch (err) {
+    console.error(err);
+  }
+
+  //PARTE RULETA
   var tamanyoRuleta = 360;
-  var numeroCasillas = 12;
+  var numeroCasillas = 10;
   var anguloCasillas = 360 / numeroCasillas;
   var grados = (180 - anguloCasillas) / 2;
   var alturaCasilla = Math.tan((grados * Math.PI) / 180) * (tamanyoRuleta / 2);
-
   var ruleta = document.querySelector(".ruleta");
   ruleta.style.width = tamanyoRuleta + "px";
   ruleta.style.height = tamanyoRuleta + "px";
-
   var style = document.createElement("style");
   style.setAttribute("id", "afterNumero");
   var head = document.querySelector("head");
   head.appendChild(style);
-
   for (var i = 1; i <= numeroCasillas; i++) {
     var opcion = document.createElement("div");
     opcion.classList.add("opcion");
     opcion.classList.add("opcion-" + i);
     ruleta.appendChild(opcion);
-
     var clasS = ".opcion-" + i;
     var opcion_i = document.querySelector(clasS);
-    opcion_i.style.transform = "rotate(" + anguloCasillas * i + "deg)";
-    opcion_i.style.borderBottomColor = (i%2 ? "#40BCA7" : "#FFFFFF");
-
+    if (anguloCasillas * i != 360)
+      opcion_i.style.transform = "rotate(" + anguloCasillas * i + "deg)";
+    opcion_i.style.borderBottomColor = i % 2 ? "#40BCA7" : "#FFFFFF";
     var afterNumero = document.querySelector("#afterNumero");
     afterNumero.innerHTML += ".opcion-" + i + "::before {content: '" + i + "'}";
-
     opcion.dataset.content = i;
     opcion.dataset.ancho = tamanyoRuleta / 2 + "px";
     opcion.dataset.line = tamanyoRuleta / 2 + "px";
   }
-
   var opciones = document.querySelectorAll(".opcion");
   opciones.forEach(function (opcion) {
     opcion.style.borderBottomWidth = alturaCasilla + "px";
     opcion.style.borderRightWidth = tamanyoRuleta / 2 + "px";
     opcion.style.borderLeftWidth = tamanyoRuleta / 2 + "px";
   });
-
   ruleta.addEventListener("click", function () {
     var num;
     var numID = "number-";
     num = 1 + Math.round(Math.random() * (numeroCasillas - 1));
     numID += num;
-
     var animacionRuleta = document.querySelector("#animacionRuleta");
     if (animacionRuleta) {
       animacionRuleta.remove();
@@ -67,7 +132,6 @@ window.addEventListener("DOMContentLoaded", function () {
       "deg); }" +
       "}";
     head.appendChild(style);
-
     ruleta.removeAttribute("id");
     ruleta.setAttribute("id", numID);
     console.log(numID);
