@@ -1,0 +1,452 @@
+{
+  "numberOfElements": 7,
+  "page": 0,
+  "size": 50,
+  "totalElements": 7,
+  "totalPages": 1,
+  "transactions": [
+    {
+      "alias": null,
+      "amount": {
+        "amount": -20,
+        "currency": "USD"
+      },
+      "amountUserCurrency": {
+        "amount": -20,
+        "currency": "USD"
+      },
+      "category": {
+        "budgetizable": null,
+        "children": [],
+        "computable": null,
+        "description": null,
+        "id": "43",
+        "level": null,
+        "name": null,
+        "parent": null,
+        "type": null,
+        "user": null
+      },
+      "cfEmissions": null,
+      "computable": true,
+      "customizedComputable": null,
+      "date": "2023-05-08T00:00Z",
+      "heatLevel": null,
+      "id": "1_TD-DS-1-8157218221-TD-TX-UpOp-8282775536",
+      "metadata": null,
+      "name": "CoGo Bike Share",
+      "patternMatched": {
+        "amountDifference": null,
+        "daysDifference": null,
+        "id": "15456",
+        "pattern": null,
+        "type": null
+      },
+      "pending": false,
+      "product": {
+        "alias": null,
+        "balance": {
+          "amount": null,
+          "currency": null
+        },
+        "balanceUserCurrency": {
+          "amount": null,
+          "currency": null
+        },
+        "budgetAvailable": null,
+        "closureDate": null,
+        "entity": null,
+        "id": "1_TD-DS-1-8157218221",
+        "name": null,
+        "number": null,
+        "permission": null,
+        "savingGoalAvailable": null,
+        "startDateOfUse": null,
+        "status": null,
+        "type": null
+      },
+      "rule": null,
+      "splits": [],
+      "tags": []
+    },
+    {
+      "alias": null,
+      "amount": {
+        "amount": -50,
+        "currency": "USD"
+      },
+      "amountUserCurrency": {
+        "amount": -50,
+        "currency": "USD"
+      },
+      "category": {
+        "budgetizable": null,
+        "children": [],
+        "computable": null,
+        "description": null,
+        "id": "15",
+        "level": null,
+        "name": null,
+        "parent": null,
+        "type": null,
+        "user": null
+      },
+      "cfEmissions": null,
+      "computable": true,
+      "customizedComputable": null,
+      "date": "2023-05-04T00:00Z",
+      "heatLevel": null,
+      "id": "1_TD-DS-1-8157218221-TD-TXDS-1-7311277706",
+      "metadata": null,
+      "name": "AT&T",
+      "patternMatched": null,
+      "pending": false,
+      "product": {
+        "alias": null,
+        "balance": {
+          "amount": null,
+          "currency": null
+        },
+        "balanceUserCurrency": {
+          "amount": null,
+          "currency": null
+        },
+        "budgetAvailable": null,
+        "closureDate": null,
+        "entity": null,
+        "id": "1_TD-DS-1-8157218221",
+        "name": null,
+        "number": null,
+        "permission": null,
+        "savingGoalAvailable": null,
+        "startDateOfUse": null,
+        "status": null,
+        "type": null
+      },
+      "rule": null,
+      "splits": [],
+      "tags": []
+    },
+    {
+      "alias": null,
+      "amount": {
+        "amount": -350,
+        "currency": "USD"
+      },
+      "amountUserCurrency": {
+        "amount": -350,
+        "currency": "USD"
+      },
+      "category": {
+        "budgetizable": null,
+        "children": [],
+        "computable": null,
+        "description": null,
+        "id": "41",
+        "level": null,
+        "name": null,
+        "parent": null,
+        "type": null,
+        "user": null
+      },
+      "cfEmissions": null,
+      "computable": true,
+      "customizedComputable": null,
+      "date": "2023-05-02T00:00Z",
+      "heatLevel": null,
+      "id": "1_TD-DS-1-8157218221-TD-TX-UpOp-5961208129",
+      "metadata": null,
+      "name": "Claudia Muller",
+      "patternMatched": {
+        "amountDifference": null,
+        "daysDifference": null,
+        "id": "15448",
+        "pattern": null,
+        "type": null
+      },
+      "pending": false,
+      "product": {
+        "alias": null,
+        "balance": {
+          "amount": null,
+          "currency": null
+        },
+        "balanceUserCurrency": {
+          "amount": null,
+          "currency": null
+        },
+        "budgetAvailable": null,
+        "closureDate": null,
+        "entity": null,
+        "id": "1_TD-DS-1-8157218221",
+        "name": null,
+        "number": null,
+        "permission": null,
+        "savingGoalAvailable": null,
+        "startDateOfUse": null,
+        "status": null,
+        "type": null
+      },
+      "rule": null,
+      "splits": [],
+      "tags": []
+    },
+    {
+      "alias": null,
+      "amount": {
+        "amount": 1600,
+        "currency": "USD"
+      },
+      "amountUserCurrency": {
+        "amount": 1600,
+        "currency": "USD"
+      },
+      "category": {
+        "budgetizable": null,
+        "children": [],
+        "computable": null,
+        "description": null,
+        "id": "81",
+        "level": null,
+        "name": null,
+        "parent": null,
+        "type": null,
+        "user": null
+      },
+      "cfEmissions": null,
+      "computable": true,
+      "customizedComputable": null,
+      "date": "2023-05-01T00:00Z",
+      "heatLevel": null,
+      "id": "1_TD-DS-1-8157218221-TD-TX-UpOp-4584004973",
+      "metadata": null,
+      "name": "Fox in the Snow Payroll",
+      "patternMatched": {
+        "amountDifference": null,
+        "daysDifference": null,
+        "id": "15440",
+        "pattern": null,
+        "type": null
+      },
+      "pending": false,
+      "product": {
+        "alias": null,
+        "balance": {
+          "amount": null,
+          "currency": null
+        },
+        "balanceUserCurrency": {
+          "amount": null,
+          "currency": null
+        },
+        "budgetAvailable": null,
+        "closureDate": null,
+        "entity": null,
+        "id": "1_TD-DS-1-8157218221",
+        "name": null,
+        "number": null,
+        "permission": null,
+        "savingGoalAvailable": null,
+        "startDateOfUse": null,
+        "status": null,
+        "type": null
+      },
+      "rule": null,
+      "splits": [],
+      "tags": []
+    },
+    {
+      "alias": null,
+      "amount": {
+        "amount": -350,
+        "currency": "USD"
+      },
+      "amountUserCurrency": {
+        "amount": -350,
+        "currency": "USD"
+      },
+      "category": {
+        "budgetizable": null,
+        "children": [],
+        "computable": null,
+        "description": null,
+        "id": "38",
+        "level": null,
+        "name": null,
+        "parent": null,
+        "type": null,
+        "user": null
+      },
+      "cfEmissions": null,
+      "computable": true,
+      "customizedComputable": null,
+      "date": "2023-04-27T00:00Z",
+      "heatLevel": null,
+      "id": "1_TD-DS-1-8157218221-TD-TX-UpOp-4244132863",
+      "metadata": null,
+      "name": "Geico Insurance",
+      "patternMatched": {
+        "amountDifference": null,
+        "daysDifference": null,
+        "id": "15474",
+        "pattern": null,
+        "type": null
+      },
+      "pending": false,
+      "product": {
+        "alias": null,
+        "balance": {
+          "amount": null,
+          "currency": null
+        },
+        "balanceUserCurrency": {
+          "amount": null,
+          "currency": null
+        },
+        "budgetAvailable": null,
+        "closureDate": null,
+        "entity": null,
+        "id": "1_TD-DS-1-8157218221",
+        "name": null,
+        "number": null,
+        "permission": null,
+        "savingGoalAvailable": null,
+        "startDateOfUse": null,
+        "status": null,
+        "type": null
+      },
+      "rule": null,
+      "splits": [],
+      "tags": []
+    },
+    {
+      "alias": null,
+      "amount": {
+        "amount": -0.99,
+        "currency": "USD"
+      },
+      "amountUserCurrency": {
+        "amount": -0.99,
+        "currency": "USD"
+      },
+      "category": {
+        "budgetizable": null,
+        "children": [],
+        "computable": null,
+        "description": null,
+        "id": "52",
+        "level": null,
+        "name": null,
+        "parent": null,
+        "type": null,
+        "user": null
+      },
+      "cfEmissions": null,
+      "computable": true,
+      "customizedComputable": null,
+      "date": "2023-04-27T00:00Z",
+      "heatLevel": null,
+      "id": "1_TD-DS-1-8157218221-TD-TX-UpOp-8672186291",
+      "metadata": null,
+      "name": "Apple Inc.",
+      "patternMatched": {
+        "amountDifference": null,
+        "daysDifference": null,
+        "id": "15470",
+        "pattern": null,
+        "type": null
+      },
+      "pending": false,
+      "product": {
+        "alias": null,
+        "balance": {
+          "amount": null,
+          "currency": null
+        },
+        "balanceUserCurrency": {
+          "amount": null,
+          "currency": null
+        },
+        "budgetAvailable": null,
+        "closureDate": null,
+        "entity": null,
+        "id": "1_TD-DS-1-8157218221",
+        "name": null,
+        "number": null,
+        "permission": null,
+        "savingGoalAvailable": null,
+        "startDateOfUse": null,
+        "status": null,
+        "type": null
+      },
+      "rule": null,
+      "splits": [],
+      "tags": []
+    },
+    {
+      "alias": null,
+      "amount": {
+        "amount": -39.99,
+        "currency": "USD"
+      },
+      "amountUserCurrency": {
+        "amount": -39.99,
+        "currency": "USD"
+      },
+      "category": {
+        "budgetizable": null,
+        "children": [],
+        "computable": null,
+        "description": null,
+        "id": "53",
+        "level": null,
+        "name": null,
+        "parent": null,
+        "type": null,
+        "user": null
+      },
+      "cfEmissions": null,
+      "computable": true,
+      "customizedComputable": null,
+      "date": "2023-04-15T00:00Z",
+      "heatLevel": null,
+      "id": "1_TD-DS-1-8157218221-TD-TX-UpOp-2492269619",
+      "metadata": null,
+      "name": "The Fitness Loft",
+      "patternMatched": {
+        "amountDifference": null,
+        "daysDifference": null,
+        "id": "15463",
+        "pattern": null,
+        "type": null
+      },
+      "pending": false,
+      "product": {
+        "alias": null,
+        "balance": {
+          "amount": null,
+          "currency": null
+        },
+        "balanceUserCurrency": {
+          "amount": null,
+          "currency": null
+        },
+        "budgetAvailable": null,
+        "closureDate": null,
+        "entity": null,
+        "id": "1_TD-DS-1-8157218221",
+        "name": null,
+        "number": null,
+        "permission": null,
+        "savingGoalAvailable": null,
+        "startDateOfUse": null,
+        "status": null,
+        "type": null
+      },
+      "rule": null,
+      "splits": [],
+      "tags": []
+    }
+  ]
+}
+s_TD-DS-1-8157218221
