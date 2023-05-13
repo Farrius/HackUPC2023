@@ -1,3 +1,5 @@
+//Global variables
+var responseGPT;
 //Merge Sort
 function mergeSort(array) {
   if (array.length <= 1) {
@@ -107,22 +109,27 @@ window.addEventListener("DOMContentLoaded", async function () {
     },
     body: JSON.stringify({
       messages: [{ role: "user", content: prompt }],
-      model: "gpt-3.5-turbo", //gpt-3.5-turbo
+      model: "gpt-3.5-turbo",
       max_tokens: 100,
       n: 1,
       stop: "\n",
       temperature: 0.7,
     }),
   };
+  /* Don't discomment until production
   try {
     var responseGPT = await fetch(url, optionsGPT);
   } catch (err) {
     console.error(err);
-  }
+  }*/
+
+  /*
   responseGPT = await responseGPT.json();
   console.log(responseGPT);
   console.log(category[5]);
   console.log(responseGPT.choices[0].message.content);
+  */
+  responseGPT = "Bycicle";
 
   //RULETA
   var tamanyoRuleta = 360;
@@ -149,8 +156,6 @@ window.addEventListener("DOMContentLoaded", async function () {
     if (i % 2) {
       opcion_i.style.borderBottomColor = "#FFFFFF";
       var afterNumero = document.querySelector("#afterNumero");
-      afterNumero.innerHTML +=
-        ".opcion-" + i + "::before {content: '" + "standard" + "'}";
     } else if (i == numeroCasillas) {
       opcion_i.style.borderBottomColor = "#FFD700";
       afterNumero.innerHTML +=
@@ -210,15 +215,16 @@ window.addEventListener("DOMContentLoaded", async function () {
     }
     var popupResultado = document.getElementById("popupResultado");
     var resultadoSlot = document.getElementById("resultadoSlot");
-    resultadoSlot.textContent = "Slot";
+    resultadoSlot.textContent = responseGPT;
     popupResultado.style.display = "block";
     // botón "Cerrar"
     var cerrarPopup = document.getElementById("cerrarPopup");
     cerrarPopup.addEventListener("click", function () {
+      /*
       cerrarPopup.style.width = "50px";
       cerrarPopup.style.height = "25px"; // Cambiar el color de fondo del botón
       cerrarPopup.style.backgroundColor = "black"; // Cambiar el color del texto del botón
-      cerrarPopup.style.color = "white";
+      cerrarPopup.style.color = "white";*/
       popupResultado.style.display = "none";
     });
   });
