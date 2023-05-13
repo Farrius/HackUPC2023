@@ -1,13 +1,13 @@
+//Merge Sort
 function mergeSort(array) {
-  // Base case: If the array is empty or has only one element, it is already sorted
   if (array.length <= 1) {
     return array;
-  } // Split the array into two halves
+  }
   const midIndex = Math.floor(array.length / 2);
   const leftHalf = array.slice(0, midIndex);
-  const rightHalf = array.slice(midIndex); // Recursively sort each half
+  const rightHalf = array.slice(midIndex);
   const sortedLeftHalf = mergeSort(leftHalf);
-  const sortedRightHalf = mergeSort(rightHalf); // Merge the sorted halves
+  const sortedRightHalf = mergeSort(rightHalf);
   const mergedArray = [];
   let leftIndex = 0;
   let rightIndex = 0;
@@ -22,13 +22,25 @@ function mergeSort(array) {
       mergedArray.push(sortedRightHalf[rightIndex]);
       rightIndex++;
     }
-  } // Append any remaining elements from the left or right half
+  }
   return mergedArray
     .concat(sortedLeftHalf.slice(leftIndex))
     .concat(sortedRightHalf.slice(rightIndex));
 }
 
-//javascript para la ruleta
+//SLEEP funcion
+function sleep(ms) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, ms);
+  });
+}
+async function espera() {
+  await sleep(6000); // Espera durante 2000 milisegundos (2 segundos)
+}
+
+//RULETA
 window.addEventListener("DOMContentLoaded", async function () {
   //RECOGER DATOS API
   const options = {
@@ -41,8 +53,8 @@ window.addEventListener("DOMContentLoaded", async function () {
     },
   };
 
+  //DECLARAR MAPA
   let map = new Map();
-
   try {
     var response = await fetch(
       "https://int.strandscloud.com/fs-api/transactions?recoverHeatLevel=false&page=0&size=50&sort=DATE_DESC&applyToSplits=false",
@@ -51,9 +63,7 @@ window.addEventListener("DOMContentLoaded", async function () {
   } catch (err) {
     console.error(err);
   }
-
   response = await response.json();
-
   for (let i = 0; i < response.numberOfElements; ++i) {
     if (map[response.transactions[i].category.id] !== undefined) {
       map.set(response.transactions[i].category.id, 1);
@@ -64,10 +74,10 @@ window.addEventListener("DOMContentLoaded", async function () {
       );
     }
   }
-
+  //ORDENAR MAPA
   let id_transaction = [...map];
   id_transaction = mergeSort(id_transaction);
-
+  //ENCONTRAR CATEGORIAS
   let category = [];
   for (let i = 0; i < id_transaction.length; ++i) {
     try {
@@ -85,7 +95,36 @@ window.addEventListener("DOMContentLoaded", async function () {
 
   console.log(category);
 
-  //PARTE RULETA
+  //OPENAI
+  const prompt = `You will be given a category name between <> and n between /. Your task is to find the best possible purchase you can make related to that category with a budget of at most n dollars. Your output will be only one word, which is the complete name of the purchase. Input: <${category[5]}> /10000/`;
+  const api_key = "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"; // Reemplaza esto con tu propia clave API
+  const url = "https://api.openai.com/v1/chat/completions";
+  const optionsGPT = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${api_key}`,
+    },
+    body: JSON.stringify({
+      messages: [{ role: "user", content: prompt }],
+      model: "gpt-3.5-turbo", //gpt-3.5-turbo
+      max_tokens: 100,
+      n: 1,
+      stop: "\n",
+      temperature: 0.7,
+    }),
+  };
+  try {
+    var responseGPT = await fetch(url, optionsGPT);
+  } catch (err) {
+    console.error(err);
+  }
+  responseGPT = await responseGPT.json();
+  console.log(responseGPT);
+  console.log(category[5]);
+  console.log(responseGPT.choices[0].message.content);
+
+  //RULETA
   var tamanyoRuleta = 360;
   var numeroCasillas = 10;
   var anguloCasillas = 360 / numeroCasillas;
@@ -107,9 +146,22 @@ window.addEventListener("DOMContentLoaded", async function () {
     var opcion_i = document.querySelector(clasS);
     if (anguloCasillas * i != 360)
       opcion_i.style.transform = "rotate(" + anguloCasillas * i + "deg)";
-    opcion_i.style.borderBottomColor = i % 2 ? "#40BCA7" : "#FFFFFF";
-    var afterNumero = document.querySelector("#afterNumero");
-    afterNumero.innerHTML += ".opcion-" + i + "::before {content: '" + i + "'}";
+    if (i % 2) {
+      opcion_i.style.borderBottomColor = "#FFFFFF";
+      var afterNumero = document.querySelector("#afterNumero");
+      afterNumero.innerHTML +=
+        ".opcion-" + i + "::before {content: '" + "standard" + "'}";
+    } else if (i == numeroCasillas) {
+      opcion_i.style.borderBottomColor = "#FFD700";
+      afterNumero.innerHTML +=
+        ".opcion-" + i + "::before {content: '" + "jackpot" + "'}";
+      var afterNumero = document.querySelector("#afterNumero");
+    } else {
+      opcion_i.style.borderBottomColor = "#33CC99";
+      afterNumero.innerHTML +=
+        ".opcion-" + i + "::before {content: '" + "prize" + "'}";
+      var afterNumero = document.querySelector("#afterNumero");
+    }
     opcion.dataset.content = i;
     opcion.dataset.ancho = tamanyoRuleta / 2 + "px";
     opcion.dataset.line = tamanyoRuleta / 2 + "px";
@@ -120,7 +172,9 @@ window.addEventListener("DOMContentLoaded", async function () {
     opcion.style.borderRightWidth = tamanyoRuleta / 2 + "px";
     opcion.style.borderLeftWidth = tamanyoRuleta / 2 + "px";
   });
-  ruleta.addEventListener("click", function () {
+
+  //POP UP
+  ruleta.addEventListener("click", async function () {
     var num;
     var numID = "number-";
     num = 1 + Math.round(Math.random() * (numeroCasillas - 1));
@@ -149,5 +203,23 @@ window.addEventListener("DOMContentLoaded", async function () {
     ruleta.removeAttribute("id");
     ruleta.setAttribute("id", numID);
     console.log(numID);
+    try {
+      await espera();
+    } catch (error) {
+      console.log(error);
+    }
+    var popupResultado = document.getElementById("popupResultado");
+    var resultadoSlot = document.getElementById("resultadoSlot");
+    resultadoSlot.textContent = "Slot";
+    popupResultado.style.display = "block";
+    // botón "Cerrar"
+    var cerrarPopup = document.getElementById("cerrarPopup");
+    cerrarPopup.addEventListener("click", function () {
+      cerrarPopup.style.width = "50px";
+      cerrarPopup.style.height = "25px"; // Cambiar el color de fondo del botón
+      cerrarPopup.style.backgroundColor = "black"; // Cambiar el color del texto del botón
+      cerrarPopup.style.color = "white";
+      popupResultado.style.display = "none";
+    });
   });
 });
