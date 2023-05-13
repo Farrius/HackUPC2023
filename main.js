@@ -1,3 +1,33 @@
+function mergeSort(array) {
+  // Base case: If the array is empty or has only one element, it is already sorted
+  if (array.length <= 1) {
+    return array;
+  } // Split the array into two halves
+  const midIndex = Math.floor(array.length / 2);
+  const leftHalf = array.slice(0, midIndex);
+  const rightHalf = array.slice(midIndex); // Recursively sort each half
+  const sortedLeftHalf = mergeSort(leftHalf);
+  const sortedRightHalf = mergeSort(rightHalf); // Merge the sorted halves
+  const mergedArray = [];
+  let leftIndex = 0;
+  let rightIndex = 0;
+  while (
+    leftIndex < sortedLeftHalf.length &&
+    rightIndex < sortedRightHalf.length
+  ) {
+    if (sortedLeftHalf[leftIndex][1] > sortedRightHalf[rightIndex][1]) {
+      mergedArray.push(sortedLeftHalf[leftIndex]);
+      leftIndex++;
+    } else {
+      mergedArray.push(sortedRightHalf[rightIndex]);
+      rightIndex++;
+    }
+  } // Append any remaining elements from the left or right half
+  return mergedArray
+    .concat(sortedLeftHalf.slice(leftIndex))
+    .concat(sortedRightHalf.slice(rightIndex));
+}
+
 //javascript para la ruleta
 window.addEventListener("DOMContentLoaded", async function () {
   //RECOGER DATOS API
@@ -11,8 +41,7 @@ window.addEventListener("DOMContentLoaded", async function () {
     },
   };
 
-  var id_transaction = [];
-  var category = [];
+  let map = new Map();
 
   try {
     var response = await fetch(
@@ -26,13 +55,25 @@ window.addEventListener("DOMContentLoaded", async function () {
   response = await response.json();
 
   for (let i = 0; i < response.numberOfElements; ++i) {
-    id_transaction.push(response.transactions[i].category.id);
+    if (map[response.transactions[i].category.id] !== undefined) {
+      map.set(response.transactions[i].category.id, 1);
+    } else {
+      map.set(
+        response.transactions[i].category.id,
+        1 + response.transactions[i].category.id
+      );
+    }
   }
 
+  let id_transaction = [...map];
+  id_transaction = mergeSort(id_transaction);
+
+  let category = [];
   for (let i = 0; i < id_transaction.length; ++i) {
     try {
       var response2 = await fetch(
-        "https://int.strandscloud.com/fs-api/categories/" + id_transaction[i],
+        "https://int.strandscloud.com/fs-api/categories/" +
+          id_transaction[i][0],
         options
       );
     } catch (err) {
@@ -43,33 +84,6 @@ window.addEventListener("DOMContentLoaded", async function () {
   }
 
   console.log(category);
-
-  //PARTE OPENAI
-
-  const prompt = "cuanto es 5 + 5?";
-  const api_key = "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"; // Reemplaza esto con tu propia clave API
-  const url = "https://api.openai.com/v1/engines/davinci-codex/completions";
-
-  const optionsGPT = {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${api_key}`,
-    },
-    body: JSON.stringify({
-      prompt: prompt,
-      max_tokens: 50,
-      n: 1,
-      stop: "\n",
-    }),
-  };
-
-  try {
-    var responseGPT = await fetch(url, optionsGPT);
-    console.log(responseGPT);
-  } catch (err) {
-    console.error(err);
-  }
 
   //PARTE RULETA
   var tamanyoRuleta = 360;
