@@ -1,6 +1,6 @@
 window.addEventListener("DOMContentLoaded", function () {
   var tamanyoRuleta = 360;
-  var numeroCasillas = 8;
+  var numeroCasillas = 12;
   var anguloCasillas = 360 / numeroCasillas;
   var grados = (180 - anguloCasillas) / 2;
   var alturaCasilla = Math.tan((grados * Math.PI) / 180) * (tamanyoRuleta / 2);
@@ -14,7 +14,7 @@ window.addEventListener("DOMContentLoaded", function () {
   var head = document.querySelector("head");
   head.appendChild(style);
 
-  for (var i = 0; i < numeroCasillas; i++) {
+  for (var i = 1; i <= numeroCasillas; i++) {
     var opcion = document.createElement("div");
     opcion.classList.add("opcion");
     opcion.classList.add("opcion-" + i);
@@ -70,5 +70,6 @@ window.addEventListener("DOMContentLoaded", function () {
 
     ruleta.removeAttribute("id");
     ruleta.setAttribute("id", numID);
+    console.log(numID);
   });
 });
